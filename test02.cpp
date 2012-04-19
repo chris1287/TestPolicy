@@ -13,7 +13,12 @@ namespace TestPolicy
 			virtual ~ExtractPolicy(){};
 			virtual T& GetElement() = 0;
 			virtual void RemoveElement() = 0;
-			virtual void PutElement(T&) = 0;
+
+			virtual void PutElement(T& t)
+			{
+				q_.push_front(t);
+			}
+
 			virtual bool IsEmpty()
 			{
 				return q_.empty();
@@ -36,11 +41,6 @@ namespace TestPolicy
 			{
 				this->q_.pop_back();
 			}
-
-			void PutElement(T& t)
-			{
-				this->q_.push_front(t);
-			}
 	};
 
 	template <typename T>
@@ -56,11 +56,6 @@ namespace TestPolicy
 			{
 				this->q_.pop_front();
 			}
-
-			void PutElement(T& t)
-			{
-				this->q_.push_front(t);
-			}
 	};
 
 	template<typename T, template<typename> class EP>
@@ -69,13 +64,7 @@ namespace TestPolicy
 		public:
 			void Traverse()
 			{
-				for_each(this->q_.begin(), this->q_.end(), Print);
-			}
-
-		private:
-			static void Print(T& t)
-			{
-				cout << t << endl;
+				for_each(this->q_.begin(), this->q_.end(), [](T i){ cout << i << endl; });
 			}
 	};
 }
