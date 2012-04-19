@@ -14,6 +14,10 @@ namespace TestPolicy
 			virtual T& GetElement() = 0;
 			virtual void RemoveElement() = 0;
 			virtual void PutElement(T&) = 0;
+			virtual bool IsEmpty()
+			{
+				return q_.empty();
+			}
 
 		protected:
 			deque<T> q_;
@@ -91,12 +95,19 @@ int main()
 		dsl.PutElement(i);
 	}
 
-	cout << "First element of dsf:" << endl;
-	cout << dsf.GetElement() << endl;
-	dsf.RemoveElement();
-	cout << "First element of dsl:" << endl;
-	cout << dsl.GetElement() << endl;
-	dsl.RemoveElement();
+	while(! dsf.IsEmpty() )
+	{
+		cout << "First element of dsf:" << endl;
+		cout << dsf.GetElement() << endl;
+		dsf.RemoveElement();
+	}
+
+	while(! dsl.IsEmpty() )
+	{
+		cout << "First element of dsl:" << endl;
+		cout << dsl.GetElement() << endl;
+		dsl.RemoveElement();
+	}
 
 	cout << "Traversing dsf:" << endl;
 	dsf.Traverse();
