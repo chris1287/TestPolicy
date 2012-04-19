@@ -12,6 +12,7 @@ namespace TestPolicy
 		public:
 			virtual ~ExtractPolicy(){};
 			virtual T& GetElement() = 0;
+			virtual T& PopElement() = 0;
 			virtual void RemoveElement() = 0;
 
 			virtual void PutElement(T& t)
@@ -41,6 +42,13 @@ namespace TestPolicy
 			{
 				this->q_.pop_back();
 			}
+
+			T& PopElement()
+			{
+				T& t = GetElement();
+				RemoveElement();
+				return t;
+			}
 	};
 
 	template <typename T>
@@ -55,6 +63,13 @@ namespace TestPolicy
 			void RemoveElement()
 			{
 				this->q_.pop_front();
+			}
+
+			T& PopElement()
+			{
+				T& t = GetElement();
+				RemoveElement();
+				return t;
 			}
 	};
 
